@@ -208,7 +208,13 @@ public protocol FailableIterator : IteratorProtocol {
 
 extension FailableIterator {
     public func next() -> Element? {
-        return try! failableNext()
+        do {
+            let next = try failableNext()
+            return next
+        } catch {
+            print("SQLITE failableNext failed! ‼️")
+            return nil
+        }
     }
 }
 
